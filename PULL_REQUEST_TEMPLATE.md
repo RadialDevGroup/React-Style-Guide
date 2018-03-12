@@ -1,10 +1,12 @@
 This PR is a:
 
- *[ ] Addition
- *[ ] Correction
- *[ ] Change
+* [ ] Addition
+* [ ] Correction
+* [ ] Change
 
 # Description
+
+
 
 # Background information
 
