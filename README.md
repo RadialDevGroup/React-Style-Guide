@@ -153,7 +153,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
 
 * Keys should come first and may be on the first line when multilined.
   ```js
-  // ok
+  // good
   <ul>
     {cars.map((car) => (
       <Car key={car.id}
@@ -265,7 +265,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     <Button text="Save" onChange={this.save}/>
   </Modal>
   ```
-* Self closing
+* Self closing tags should not have closing bracket on its own line
   ```js
   // good
   <Input
