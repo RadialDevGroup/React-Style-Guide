@@ -24,16 +24,7 @@
   cars.filter(car => car.color == 'red');
   ```
 
-* Object whitespace
-  ```js
-  // good
-  const car = {color: 'red', model: 'Saturn'};
-
-  // bad
-  const car = { color: 'red', model: 'Saturn' };
-  // bad
-  const car = {color:'red',model:'Saturn'};
-  ```
+* Object whitespace (see [Whitespace](#whitespace))
 
 
 ## Common packages
@@ -52,6 +43,7 @@
   - Utility libraries (e.g. lodash)
   - Frameworks (e.g. Redux)
   - Utility functions/constants
+  - Reducers/Synchronizers
   - Actions
   - Components
 
@@ -360,6 +352,8 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
 ## Methods
 
 * React component methods should be in [lifecycle order](https://reactjs.org/docs/react-component.html#the-component-lifecycle) with the exception of `render()` which should always be the last method.
+
+* Custom class methods should be between lifecycle and render.
 
 * Unless a constuctor is necessary, define initial state in the class scope
   ```js
