@@ -1,5 +1,7 @@
 # Radial React Project Style Guide
 
+The recommendations in this guide are intended to balance readability with ease of editing.
+
 ## Contents
 
 * [Javascript](#javascript)
@@ -15,8 +17,9 @@
 
 * For general Javascript syntax see [this styleguide](https://github.com/airbnb/javascript) except for the following cases:
 
+
 * Always use parenthesis around single parameter arrow functions.
-  ```js
+  ```````````
   // good
   cars.filter((car) => car.color == 'red');
 
@@ -53,8 +56,8 @@
   import { connect } from 'react-redux';
   import { Link } from 'react-router-dom';
   import { Card, Button } from 'semantic-ui-react';
-  import { fetchUsers } from 'actions/users';
   import searchBy from 'utils/search';
+  import { fetchUsers } from 'actions/users';
 
   import Search from 'components/helpers/Search';
   import Page from 'components/layouts/Page';
@@ -86,6 +89,17 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
       <Button text="Save" onChange={this.save}/>
       <Button text="Cancel" onChange={this.goBack}/>
     </div>;
+  }
+  ```
+
+* [Fragments](https://reactjs.org/docs/fragments.html) do not require parenthesis
+  ```js
+  // good
+  render() {
+    return <>
+      <Button text="Save" onChange={this.save}/>
+      <Button text="Cancel" onChange={this.goBack}/>
+    </>;
   }
   ```
 
@@ -171,6 +185,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   ```js
   // good
   <p>Hi {name}, welcome to the site!</p>
+
   // good
   <p>
     <i className="icon-checkmark"/>
@@ -181,17 +196,18 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   <p><i className="icon-checkmark"/><strong>Hi {name}</strong>, welcome to the site!</p>
   ```
 
-* Extract components, don't have multiple rendering functions. This will make the class shorter and more readable and make it easier to extract and reuse common components.
+* Extract components instead of writing multiple rendering functions. This will make the class shorter and more readable and make it easier to extract and reuse common components.
   ```js
   // good
   const ErrorMessage = (message) => {
     if (!message) return null;
     return <div className="error"><i className="icon-alert"/>{message}</div>;
-  }
+  };
 
   class MyComponent extends React.Component {
     render() {
       const {cars, error} = this.props;
+
       return (
         <div>
           <ErrorMessage message={error}/>
@@ -210,6 +226,39 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
       return <div className="error"><i className="icon-alert"/>{this.props.error}</div>;
     }
 
+    render() {
+      return (
+        <div>
+          {this.renderErrorMessage()}
+          {cars.map((car) => (
+            <Car key={car.id} car={car}/>
+          ))}
+        </div>
+      );
+    }
+  }
+  ```
+
+* Avoid separating a list from its container.
+  ```js
+  // good
+  class MyComponent extends React.Component {
+    render() {
+      const {cars, error} = this.props;
+
+      return (
+        <div>
+          <ErrorMessage message={error}/>
+          {cars.map((car) => (
+            <Car key={car.id} car={car}/>
+          ))}
+        </div>
+      );
+    }
+  }
+
+  // bad
+  class MyComponent extends React.Component {
     showCars() {
       return this.props.cars.map((car) => (
         <Car key={car.id} car={car}/>
@@ -219,7 +268,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     render() {
       return (
         <div>
-          {this.renderErrorMessage()}
+          <ErrorMessage message={error}/>
           {this.showCars()}
         </div>
       );
@@ -323,10 +372,10 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   import {Card, Button} from 'semantic-ui-react';
   ```
 
-* Destructuring
+* Destructuring. No space after the colon for renaming a key and no space around equals for default value to differenciate them from 
   ```js
   // good
-  selectItem = ({target:{value:selectedItem=0}}) => this.setState({selectedItem})
+  selectItem = ({target: {value:selectedItem=0}}) => this.setState({selectedItem})
 
   // bad
   selectItem = ({target: {value: selectedItem = 0}}) => this.setState({selectedItem})
@@ -338,20 +387,20 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   ```js
   // good
   cars.filter((car) => {
-    return car.color == 'red';
+    return car.color === 'red';
   });
 
   // less good
   cars.filter(
     (car) => {
-      return car.color == 'red';
+      return car.color === 'red';
     }
   );
   ```
 
 ## Methods
 
-* React component methods should be in [lifecycle order](https://reactjs.org/docs/react-component.html#the-component-lifecycle) with the exception of `render()` which should always be the last method.
+* React component methods should be in [lifecycle order](https://reactjs.org/docs/react-component.html#the-component-lifecycle) with the exception of `render()` which should always be the last method and `componentDidCatch()` which should be immediately after `constructor()` or `state =`.
 
 * Custom class methods should be between lifecycle and render.
 
@@ -365,23 +414,23 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     ///...
   }
 
-  // less good
+  // when necessary
   class MyComponent extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        active: true
+        active: props.active
       };
     }
     ///...
   }
   ```
-* If a method does not call another class method (such as `setState()`) extract it outside the class.
+* If a method does not call another class method (such as `setState()`), extract it outside the class. Consider merging/processing data before they become props to keep your components focused on rendering.
   ```js
   // good
   const connect = () => {
     API.connect();
-  }
+  };
 
   class MyComponent extends React.Component {
     render() {
@@ -428,4 +477,13 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     if (!message) return null;
     return <div className={`status ${level}`}>{message}</div>;
   }
+  ```
+
+* Redux connect function names: use `mapStoreToProps` instead of `mapStateToProps` to avoid overloading "state"
+  ```js
+  const mapStoreToProps = ({status}) => ({status});
+  const mapDispatchToProps = (dispatch) => ({
+    subscribe: (params) => dispatch(subscribe(params)),
+  });
+  export default connect(mapStoreToProps, mapDispatchToProps)(MyComponent);
   ```
