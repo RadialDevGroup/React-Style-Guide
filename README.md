@@ -19,7 +19,7 @@ The recommendations in this guide are intended to balance readability with ease 
 
 
 * Always use parenthesis around single parameter arrow functions.
-  ```````````
+  ```js
   // good
   cars.filter((car) => car.color == 'red');
 
@@ -27,7 +27,7 @@ The recommendations in this guide are intended to balance readability with ease 
   cars.filter(car => car.color == 'red');
   ```
 
-* Object whitespace (see [Whitespace](#whitespace))
+* Object whitespace (see [Whitespace](#whitespace)).
 
 
 ## Common packages
@@ -38,13 +38,13 @@ The recommendations in this guide are intended to balance readability with ease 
 
 ### Filenames
 
-* Use camelCase that matches the default export (this makes it easier to edit in a text editor)
+* Use camelCase that matches the default export (this makes it easier to edit in a text editor).
 
 ## Imports
 
 * Import modules in order of more general to more specific:
-  - Utility libraries (e.g. lodash)
-  - Frameworks (e.g. Redux)
+  - Utility libraries (e.g. [lodash](https://lodash.com/docs/4.17.10))
+  - Frameworks (e.g. [Redux](https://redux.js.org/))
   - Utility functions/constants
   - Reducers/Synchronizers
   - Actions
@@ -92,7 +92,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   }
   ```
 
-* [Fragments](https://reactjs.org/docs/fragments.html) do not require parenthesis
+* [Fragments](https://reactjs.org/docs/fragments.html) do not require parentheses.
   ```js
   // good
   render() {
@@ -103,7 +103,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   }
   ```
 
-* use double quotes for attributes
+* Use double quotes for attributes.
   ```js
   // good
   <Button text="Save" onChange={this.save}/>
@@ -112,7 +112,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   <Button text='Save' onChange={this.save}/>
   ```
 
-* Do not use braces around double quotes
+* Do not use braces around double quotes.
   ```js
   // good
   <Button text="Save" onChange={this.save}/>
@@ -121,7 +121,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   <Button text={"Save"} onChange={this.save}/>
   ```
 
-* Do not use spaces around =
+* Do not use spaces around `=`.
   ```js
   // good
   <Button text="Save" onChange={this.save}/>
@@ -130,7 +130,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   <Button text = "Save" onChange = {this.save}/>
   ```
 
-* Inline short components
+* Inline short components.
   ```js
   // good
   <Button text="Save" onChange={this.save}/>
@@ -141,7 +141,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     onChange={this.save}/>
   ```
 
-* Multiline each prop on it's own line
+* Multiline each prop on it's own line.
   ```js
   // good
   <Input
@@ -276,7 +276,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   }
   ```
 
-* No space before `/>`
+* No space before `/>`.
   ```js
   // good
   <Button text="Save" onChange={this.save}/>
@@ -285,7 +285,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   <Button text="Save" onChange={this.save} />
   ```
 
-* Closing `>` on its own line
+* Closing `>` on its own line.
   ```js
   // good
   <Modal
@@ -306,7 +306,8 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     <Button text="Save" onChange={this.save}/>
   </Modal>
   ```
-* Self closing tags should not have closing bracket on its own line
+
+* Self closing tags should not have closing bracket on its own line.
   ```js
   // good
   <Input
@@ -352,7 +353,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
 
 ## Whitespace
 
-* Object whitespace
+* Object whitespace:
   ```js
   // good
   const car = {color: 'red', model: 'Saturn'};
@@ -363,7 +364,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   const car = {color:'red',model:'Saturn'};
   ```
 
-* Import whitespace
+* Import whitespace:
   ```js
   // good
   import { Card, Button } from 'semantic-ui-react';
@@ -372,7 +373,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   import {Card, Button} from 'semantic-ui-react';
   ```
 
-* Destructuring. No space after the colon for renaming a key and no space around equals for default value to differenciate them from 
+* Destructuring. No space after the colon for renaming a key and no space around equals for default value to differentiate them from objects.
   ```js
   // good
   selectItem = ({target: {value:selectedItem=0}}) => this.setState({selectedItem})
@@ -383,7 +384,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   selectItem = (e) => this.setState({selectedItem: e.target.value || 0})
   ```
 
-* Collapse closing symbols
+* Collapse closing symbols.
   ```js
   // good
   cars.filter((car) => {
@@ -404,7 +405,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
 
 * Custom class methods should be between lifecycle and render.
 
-* Unless a constuctor is necessary, define initial state in the class scope
+* Unless a constuctor is necessary, define initial state in the class scope.
   ```js
   // good
   class MyComponent extends React.Component {
@@ -425,6 +426,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     ///...
   }
   ```
+
 * If a method does not call another class method (such as `setState()`), extract it outside the class. Consider merging/processing data before they become props to keep your components focused on rendering.
   ```js
   // good
@@ -449,7 +451,6 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
     }
   }
   ```
-
 
 ## Common Patterns
 
@@ -479,7 +480,7 @@ JSX leverages syntactic similarity with HTML so similar conventions should be ob
   }
   ```
 
-* Redux connect function names: use `mapStoreToProps` instead of `mapStateToProps` to avoid overloading "state"
+* [Redux connect](https://github.com/reduxjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) function names: use `mapStoreToProps` instead of `mapStateToProps` to avoid overloading "state".
   ```js
   const mapStoreToProps = ({status}) => ({status});
   const mapDispatchToProps = (dispatch) => ({
